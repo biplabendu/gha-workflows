@@ -8,6 +8,20 @@ on:
         description: 'R version to use'
         required: false
         default: '4.3.1'
+      system_dependencies:
+        type: string
+        description: 'List of system dependencies to install'
+        required: false
+        default: |
+          libx11-dev \
+          make \
+          zlib1g-dev \
+          pandoc \
+          libicu-dev \
+          libpng-dev \
+          libfontconfig1-dev \
+          libfreetype6-dev \
+          libxml2-dev
 
 jobs:
   build-deploy:
@@ -31,15 +45,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-          libx11-dev \
-          make \
-          zlib1g-dev \
-          pandoc \
-          libicu-dev \
-          libpng-dev \
-          libfontconfig1-dev \
-          libfreetype6-dev \
-          libxml2-dev
+          ${{ inputs.system_dependencies }}
       
       - name: Install R Dependencies
         uses: r-lib/actions/setup-renv@v2
