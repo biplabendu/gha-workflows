@@ -26,6 +26,11 @@ on:
           libfontconfig1-dev \
           libfreetype6-dev \
           libxml2-dev
+      publish_path:
+        type: string
+        description: 'Path to the directory to publish (Quarto _site output, etc.)'
+        required: false
+        default: 'content'
 
 jobs:
   build-deploy:
@@ -76,6 +81,6 @@ jobs:
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
-          path: "."
+          path: ${{ inputs.publish_path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
